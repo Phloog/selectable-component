@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>A-Frame Selectable Component - Basic</title>
+    <script src="../build.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets></a-assets>
+
+      <a-camera position="0 1.8 5">
+        <a-entity
+          cursor="maxDistance: 30; timeout: 500"
+          position="0 0 -5"
+          geometry="primitive: ring; radiusInner: 0.1; radiusOuter: 0.15; segmentsTheta: 32"
+          material="color: #ff7700; shader: flat">
+        </a-entity>
+      </a-camera>
+
+      <a-entity selectable>
+        <a-entity position="-4 0 -2" geometry="primitive: sphere" material="color: #5f0"></a-entity>
+        <a-entity position="-2 0 -2" geometry="primitive: box" material="color: #0af"></a-entity>
+        <a-entity position="2 0 -2" rotation="0 45 0 " geometry="primitive: box" material="color: #f0a"></a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
