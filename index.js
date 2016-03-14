@@ -25,6 +25,10 @@ AFRAME.registerComponent('selectable', {
     var self = this;
 
     this.el.addEventListener('click', function (e) {
+      if (e.target === self.el) {
+        return;
+      }
+
       self.select(e.target);
 
       var event = new Event('selected');
