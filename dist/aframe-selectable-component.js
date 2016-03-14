@@ -71,6 +71,10 @@
 	    var self = this;
 
 	    this.el.addEventListener('click', function (e) {
+	      if (e.target === self.el) {
+	        return;
+	      }
+
 	      self.select(e.target);
 
 	      var event = new Event('selected');
@@ -110,7 +114,11 @@
 	  /**
 	   * Called on each scene tick.
 	   */
-	  // tick: function (t) { },
+	  tick: function (t) { 
+	    if (this.bbox) {
+	      this.bbox.update();
+	    }
+	  },
 
 	  /**
 	   * Called when entity pauses.

@@ -18,7 +18,7 @@
 
       <a-entity selectable>
         <a-entity position="-5 0 -2" geometry="primitive: sphere" material="color: #5f0"></a-entity>
-        <a-entity position="-2 0 -2" geometry="primitive: box" material="color: #0af"></a-entity>
+        <a-entity id="blue" position="-2 0 -2" geometry="primitive: box" material="color: #0af"></a-entity>
         <a-entity position="2 0 -2" rotation="0 45 0 " geometry="primitive: box" material="color: #f0a"></a-entity>
 
         <a-obj-model src="https://www.scenevr.com/assets/2.obj" color="#03f" position="5 0 -2"></a-obj-model>
@@ -26,9 +26,17 @@
     </a-scene>
 
     <script>
-      document.querySelector('a-entity[selectable]').addEventListener('selected', (e) => {
+      document.querySelector('a-entity[selectable]').addEventListener('selected', function (e) {
         console.log(e.selected);
       });
+
+      var i = 0;
+      var p = new THREE.Vector3(-2, 0, -2);
+      setInterval(function () {
+        i+= 0.05;
+        p.y = Math.sin(i) * 2 + 2;
+        document.querySelector('#blue').setAttribute('position', p);
+      }, 1000 / 60);
     </script>
   </body>
 </html>

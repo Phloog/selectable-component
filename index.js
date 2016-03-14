@@ -68,7 +68,11 @@ AFRAME.registerComponent('selectable', {
   /**
    * Called on each scene tick.
    */
-  // tick: function (t) { },
+  tick: function (t) { 
+    if (this.bbox) {
+      this.bbox.update();
+    }
+  },
 
   /**
    * Called when entity pauses.
