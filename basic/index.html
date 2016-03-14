@@ -22,5 +22,11 @@
         <a-entity position="2 0 -2" rotation="0 45 0 " geometry="primitive: box" material="color: #f0a"></a-entity>
       </a-entity>
     </a-scene>
+
+    <script>
+      document.querySelector('a-entity[selectable]').addEventListener('selected', (e) => {
+        console.log(e.selected);
+      });
+    </script>
   </body>
 </html>
