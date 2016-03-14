@@ -1,4 +1,4 @@
-/* globals AFRAME, THREE */
+/* globals AFRAME, Event, THREE */
 
 if (typeof AFRAME === 'undefined') {
   throw new Error('Component attempted to register before AFRAME was available.');
@@ -24,6 +24,10 @@ AFRAME.registerComponent('selectable', {
   update: function (oldData) {
     this.el.addEventListener('click', (e) => {
       this.select(e.target);
+
+      var event = new Event('selected');
+      event.selected = e.target;
+      this.el.dispatchEvent(event);
     });
   },
 
