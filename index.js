@@ -1,29 +1,59 @@
+/* globals AFRAME, THREE */
+
 if (typeof AFRAME === 'undefined') {
-  throw 'Component attempted to register before AFRAME was available.';
+  throw new Error('Component attempted to register before AFRAME was available.');
 }
 
 /**
  * Selected component for A-Frame.
  */
-AFRAME.registerComponent('selected', {
+AFRAME.registerComponent('selectable', {
   schema: { },
 
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  init: function () { },
+  init: function () {
+    this.selected = null;
+  },
 
   /**
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
    */
-  update: function (oldData) { },
+  update: function (oldData) {
+    this.el.addEventListener('click', (e) => {
+      this.select(e.target);
+    });
+  },
+
+  select: function (entity) {
+    var obj = this.el.object3D;
+
+    this.selected = entity;
+
+    if (this.bbox) {
+      obj.remove(this.bbox);
+    }
+
+    this.bbox = new THREE.BoundingBoxHelper(this.selected.object3D, '#ff7700');
+    this.bbox.update();
+    obj.add(this.bbox);
+  },
 
   /**
    * Called when a component is removed (e.g., via removeAttribute).
    * Generally undoes all modifications to the entity.
    */
-  remove: function () { },
+  remove: function () {
+    if (this.bbox) {
+      this.el.object3D.remove(this.bbox);
+    }
+
+    // Unassign
+    this.selected = null;
+    this.bbox = null;
+  },
 
   /**
    * Called on each scene tick.
@@ -40,5 +70,5 @@ AFRAME.registerComponent('selected', {
    * Called when entity resumes.
    * Use to continue or add any dynamic or background behavior such as events.
    */
-  play: function () { },
+  play: function () { }
 });
