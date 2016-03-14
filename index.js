@@ -22,12 +22,14 @@ AFRAME.registerComponent('selectable', {
    * Generally modifies the entity based on the data.
    */
   update: function (oldData) {
-    this.el.addEventListener('click', (e) => {
-      this.select(e.target);
+    var self = this;
+
+    this.el.addEventListener('click', function (e) {
+      self.select(e.target);
 
       var event = new Event('selected');
       event.selected = e.target;
-      this.el.dispatchEvent(event);
+      self.el.dispatchEvent(event);
     });
   },
 
