@@ -17,16 +17,6 @@ AFRAME.registerComponent('selectable', {
     this.selected = null;
   },
 
-  getScene: function () {
-    var result = this.el;
-
-    while (result.parentNode && result.nodeName !== 'a-scene') {
-      result = result.parentNode;
-    }
-
-    return result;
-  },
-
   /**
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
@@ -34,40 +24,24 @@ AFRAME.registerComponent('selectable', {
   update: function (oldData) {
     var self = this;
 
-    var preventDefault = false;
-
-    this.getScene().addEventListener('click', function (e) {
-      if (preventDefault) {
-        return;
-      }
-
-      self.select(null);
-    });
-
     this.el.addEventListener('click', function (e) {
       if (e.target === self.el) {
+        self.select(null);
         return;
       }
 
       self.select(e.target);
-
-      preventDefault = true;
-
-      // fixme: gross
-      setTimeout(function () {
-        preventDefault = false;
-      }, 5);
     });
   },
 
   select: function (entity) {
-    var obj = this.el.object3D;
-
     this.selected = entity;
 
     var event = new Event('selected');
     event.selected = this.selected;
     this.el.dispatchEvent(event);
+
+    var obj = this.el.object3D;
 
     if (this.bbox) {
       obj.remove(this.bbox);
