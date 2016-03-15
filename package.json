@@ -1,6 +1,6 @@
 {
   "name": "aframe-selectable-component",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Selected component for A-Frame VR.",
   "main": "index.js",
   "scripts": {
