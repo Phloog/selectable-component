@@ -17,12 +17,32 @@ AFRAME.registerComponent('selectable', {
     this.selected = null;
   },
 
+  getScene: function () {
+    var result = this.el;
+
+    while (result.parentNode && result.nodeName !== 'a-scene') {
+      result = result.parentNode;
+    }
+
+    return result;
+  },
+
   /**
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
    */
   update: function (oldData) {
     var self = this;
+
+    var preventDefault = false;
+
+    this.getScene().addEventListener('click', function (e) {
+      if (preventDefault) {
+        return;
+      }
+
+      self.select(null);
+    });
 
     this.el.addEventListener('click', function (e) {
       if (e.target === self.el) {
@@ -34,6 +54,13 @@ AFRAME.registerComponent('selectable', {
       var event = new Event('selected');
       event.selected = e.target;
       self.el.dispatchEvent(event);
+
+      preventDefault = true;
+
+      // fixme: gross
+      setTimeout(() => {
+        preventDefault = false;
+      }, 5);
     });
   },
 
@@ -44,11 +71,14 @@ AFRAME.registerComponent('selectable', {
 
     if (this.bbox) {
       obj.remove(this.bbox);
+      delete this.bbox;
     }
 
-    this.bbox = new THREE.BoundingBoxHelper(this.selected.object3D, '#ff7700');
-    this.bbox.update();
-    obj.add(this.bbox);
+    if (this.selected) {
+      this.bbox = new THREE.BoundingBoxHelper(this.selected.object3D, '#ff7700');
+      this.bbox.update();
+      obj.add(this.bbox);
+    }
   },
 
   /**
@@ -68,7 +98,7 @@ AFRAME.registerComponent('selectable', {
   /**
    * Called on each scene tick.
    */
-  tick: function (t) { 
+  tick: function (t) {
     if (this.bbox) {
       this.bbox.update();
     }
