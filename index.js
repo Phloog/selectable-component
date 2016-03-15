@@ -58,7 +58,7 @@ AFRAME.registerComponent('selectable', {
       preventDefault = true;
 
       // fixme: gross
-      setTimeout(() => {
+      setTimeout(function () {
         preventDefault = false;
       }, 5);
     });
