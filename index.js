@@ -66,7 +66,7 @@ AFRAME.registerComponent('selectable', {
     this.selected = entity;
 
     var event = new Event('selected');
-    event.selected = this.target;
+    event.selected = this.selected;
     this.el.dispatchEvent(event);
 
     if (this.bbox) {
