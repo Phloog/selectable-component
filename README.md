@@ -25,3 +25,7 @@ Now everything inside the first entity will be selectable. Focus the ring on it,
     });
 
 Only one thing at a time can be selected, but I'm open to pull requests to allow multi-selection.
+
+Click an element again to toggle selection.
+
+Click anywhere else in the scene to remove the selection.
