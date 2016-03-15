@@ -97,10 +97,6 @@
 
 	      self.select(e.target);
 
-	      var event = new Event('selected');
-	      event.selected = e.target;
-	      self.el.dispatchEvent(event);
-
 	      preventDefault = true;
 
 	      // fixme: gross
@@ -114,6 +110,10 @@
 	    var obj = this.el.object3D;
 
 	    this.selected = entity;
+
+	    var event = new Event('selected');
+	    event.selected = this.selected;
+	    this.el.dispatchEvent(event);
 
 	    if (this.bbox) {
 	      obj.remove(this.bbox);
