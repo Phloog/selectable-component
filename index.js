@@ -51,10 +51,6 @@ AFRAME.registerComponent('selectable', {
 
       self.select(e.target);
 
-      var event = new Event('selected');
-      event.selected = e.target;
-      self.el.dispatchEvent(event);
-
       preventDefault = true;
 
       // fixme: gross
@@ -68,6 +64,10 @@ AFRAME.registerComponent('selectable', {
     var obj = this.el.object3D;
 
     this.selected = entity;
+
+    var event = new Event('selected');
+    event.selected = this.target;
+    this.el.dispatchEvent(event);
 
     if (this.bbox) {
       obj.remove(this.bbox);
